@@ -6,19 +6,19 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: web
-  name: web
+    io.kompose.service: dashboard
+  name: dashboard
 spec:
-  clusterIP: 10.99.132.220
+  clusterIP: 10.99.132.221
   externalTrafficPolicy: Cluster
   type: LoadBalancer
   ports:
-    - name: "8004"
-      nodePort: 31534
-      port: 8004
+    - name: "5556"
+      nodePort: 31535
+      port: 5556
       protocol: TCP
-      targetPort: 8000
+      targetPort: 5555
   selector:
-    io.kompose.service: web
+    io.kompose.service: dashboard
 status:
   loadBalancer: {}
