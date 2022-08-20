@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dashboard
+  name: dashboard
+spec:
+  ports:
+    - name: "5556"
+      port: 5556
+      targetPort: 5555
+  selector:
+    io.kompose.service: dashboard
+status:
+  loadBalancer: {}
