@@ -76,4 +76,8 @@ image: dashboard -> image: registryHost.com/fastapi-celery_dashboard
 ### Once the yaml files are updated, run:
 ```sh
 kubectl apply -f k8s
+
+kubectl delete -f k8s
 ```
+
+### TODO: create helm chart to bundle the deployment
