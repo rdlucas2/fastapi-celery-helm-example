@@ -1,0 +1,30 @@
+image:
+  repository: devrlsharedacr.azurecr.io/fastapi-celery_dashboard
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: regcred
+
+containerPort: 5555
+
+env:
+  - name: CELERY_BROKER_URL
+    value: redis://redis:6379/0
+  - name: CELERY_RESULT_BACKEND
+    value: redis://redis:6379/0
+
+service:
+  enabled: true
+  isLocal: true
+  name: dashboard
+  clusterIP: 10.99.132.221
+  nodePort: 31535
+  port: 5556
+  targetPort: 5555
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false

@@ -43,9 +43,9 @@ Remove the persistent volume claim files and references to it in the deployment 
 Then add some layers to the dockerfile using the commands in the docker compose as the CMD in the dockerfile
 
 ```sh
-docker build -t devrlsharedacr.azurecr.io/fastapi-celery_web:latest ./project
-docker build -t devrlsharedacr.azurecr.io/fastapi-celery_worker:latest ./project
-docker build -t devrlsharedacr.azurecr.io/fastapi-celery_dashboard:latest ./project
+docker build -t devrlsharedacr.azurecr.io/fastapi-celery_web:latest --target web ./project
+docker build -t devrlsharedacr.azurecr.io/fastapi-celery_worker:latest --target worker ./project
+docker build -t devrlsharedacr.azurecr.io/fastapi-celery_dashboard:latest --target dashboard ./project
 ```
 
 ### Install kompose: 
@@ -80,4 +80,29 @@ kubectl apply -f k8s
 kubectl delete -f k8s
 ```
 
-### TODO: create helm chart to bundle the deployment
+### Create a helm chart:
+helm create base-chart
+
+### create override files and make sure they work. 
+#### These will be similar to the k8s yaml, but we should be able to use the same chart for all components (web, dashboard, redis, worker).
+
+### check rendering of overrides:
+```sh
+cd helm
+helm template base-chart -f ./overrides/local.dashboard.yaml
+helm template base-chart -f ./overrides/local.redis.yaml
+helm template base-chart -f ./overrides/local.web.yaml
+helm template base-chart -f ./overrides/local.worker.yaml
+```
+
+### install the helm charts
+```sh
+cd helm
+helm install dashboard base-chart -f ./overrides/local.dashboard.yaml
+helm install redis base-chart -f ./overrides/local.redis.yaml
+helm install web base-chart -f ./overrides/local.web.yaml
+helm install worker base-chart -f ./overrides/local.worker.yaml
+```
+
+```helm list``` to see charts installed in your cluster, 
+```helm uninstall <NAME>``` to remove chart

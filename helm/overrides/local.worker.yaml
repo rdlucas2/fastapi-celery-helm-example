@@ -1,0 +1,24 @@
+image:
+  repository: devrlsharedacr.azurecr.io/fastapi-celery_worker
+  pullPolicy: Always
+  tag: "latest"
+
+containerPort: 9999
+
+imagePullSecrets:
+  - name: regcred
+
+env:
+  - name: CELERY_BROKER_URL
+    value: redis://redis:6379/0
+  - name: CELERY_RESULT_BACKEND
+    value: redis://redis:6379/0
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+service:
+  enabled: false

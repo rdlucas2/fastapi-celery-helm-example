@@ -1,0 +1,30 @@
+image:
+  repository: devrlsharedacr.azurecr.io/fastapi-celery_web
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: regcred
+
+containerPort: 8000
+
+env:
+  - name: CELERY_BROKER_URL
+    value: redis://redis:6379/0
+  - name: CELERY_RESULT_BACKEND
+    value: redis://redis:6379/0
+
+service:
+  enabled: true
+  isLocal: true
+  name: web
+  clusterIP: 10.99.132.220
+  nodePort: 31534
+  port: 8004
+  targetPort: 8000
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false

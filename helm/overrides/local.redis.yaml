@@ -1,0 +1,19 @@
+image:
+  repository: redis
+  pullPolicy: Always
+  tag: "6-alpine"
+
+service:
+  enabled: true
+  isLocal: true
+  name: redis
+  clusterIP: 10.99.132.222
+  nodePort: 31536
+  port: 6379
+  targetPort: 6379
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false

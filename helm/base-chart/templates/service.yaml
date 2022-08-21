@@ -1,0 +1,30 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+    {{- include "base-chart.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.service.isLocal }}
+  clusterIP: {{ .Values.service.clusterIP }}
+  externalTrafficPolicy: Cluster
+  type: LoadBalancer
+  ports:
+    - name: "{{ .Values.service.port }}"
+      nodePort: {{ .Values.service.nodePort }}
+      port: {{ .Values.service.port }}
+      protocol: TCP
+      targetPort: {{ .Values.service.targetPort }}
+  {{- end }}
+  {{- if .Values.service.isIngress }}
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+  {{- end}}
+  selector:
+    {{- include "base-chart.selectorLabels" . | nindent 4 }}
+{{- end }}
