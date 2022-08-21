@@ -90,8 +90,8 @@ kubectl delete -f k8s
 ### Create a helm chart:
 helm create base-chart
 
-### create override files and make sure they work. 
-#### These will be similar to the k8s yaml, but we should be able to use the same chart for all components (web, dashboard, redis, worker).
+### create override files and make sure they work.
+#### These will be similar to the k8s yaml, but we should be able to use the same chart for all components (web, dashboard, redis, worker) - given some modifications to the base chart.
 
 ### check rendering of overrides:
 ```sh
