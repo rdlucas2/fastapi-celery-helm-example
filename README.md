@@ -55,6 +55,8 @@ https://kompose.io/installation/
 ```sh
 $ kompose convert
 ```
+This generates some volumes, due to how the dockerfile is written. I removed the volume related yaml blocks, and had to update the dockerfile to include some layers to build the images with the right commands.
+
 
 ### Upload images to a container registry, then update the images in web-deployment.yaml, worker-deployment.yaml, and dashboard-deployment.yaml
 ```sh
@@ -72,6 +74,11 @@ image: dashboard -> image: registryHost.com/fastapi-celery_dashboard
 ```
 
 #### Be sure your cluster has image pull creds for the registry you're pushing the images to
+See: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+
+```sh
+kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+```
 
 ### Once the yaml files are updated, run:
 ```sh
